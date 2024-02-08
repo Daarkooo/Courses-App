@@ -8,12 +8,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.movableContentOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             // A surface container using the 'background' color from the theme
             Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                CouresesUI(topics = DataSourcee.topics)
+                CouresesUI()
             }
         }
     }
@@ -42,9 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CouresesUI(
-    topics: List<Topic>,
     modifier: Modifier = Modifier.padding(8.dp),
-
 ){
     Box(
         modifier = Modifier
@@ -61,8 +61,8 @@ fun CouresesUI(
             Arrangement.spacedBy(12.dp), // Spacing between the columns in our case 16 for only 2 columns
             modifier = modifier
         ) {
-            items(topics.size) { index ->
-                TopicItem(topic = topics[index])
+            items(DataSourcee.topics) { topic ->
+                TopicItem(topic)
             }
         }
     }
@@ -86,7 +86,7 @@ fun TopicItem(topic: Topic){
                     text = stringResource(topic.stringResourceId),
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp)
                     )
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(R.drawable.ic_grain),
                         contentDescription = null,
@@ -105,5 +105,5 @@ fun TopicItem(topic: Topic){
     showSystemUi = true)
 @Composable
 fun CuursesPreview() {
-    CouresesUI(topics = DataSourcee.topics)
+    CouresesUI()
 }
